@@ -1,0 +1,135 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/mkschreder/siteboot_php"
+
+    >node-php (v0.0.1)</a>
+</h1>
+<h4>Node JS modules for running wordpress in node js</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.node-php">module node-php</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.node-php.cgi">
+            function <span class="apidocSignatureSpan">node-php.</span>cgi
+            <span class="apidocSignatureSpan">(phproot)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.node-php" id="apidoc.module.node-php">module node-php</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.node-php.cgi" id="apidoc.element.node-php.cgi">
+        function <span class="apidocSignatureSpan">node-php.</span>cgi
+        <span class="apidocSignatureSpan">(phproot)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">cgi = function (phproot){
+	return function(req, res, next){
+    var data = null;
+
+    //req.setEncoding(&#x27;utf8&#x27;);
+    req.on(&#x27;data&#x27;, function(chunk) {
+			//data.write(chunk.toString(&#x27;binary&#x27;), data.length, chunk.length, &#x27;binary&#x27;);
+			//console.log(chunk);
+			if(!data) data = chunk;
+			else data = data+chunk;
+			//data = data.concat(chunk);
+    });
+    req.on(&#x27;end&#x27;, function() {
+			req.rawBody = data||&#x22;&#x22;;
+			//console.log(req.rawBody);
+			//console.log(&#x22;ENCODING: &#x22;+req.get(&#x22;Content-type&#x22;)+&#x22;, len: &#x22;+req.rawBody.length);
+			runPHP(req, res, next, phproot);
+    });
+	}
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+	var express = require(&#x27;express&#x27;);
+	var php = require(&#x22;php&#x22;);
+	var path = require(&#x22;path&#x22;);
+	
+	var app = express();
+	
+	app.use(&#x22;/&#x22;, php.<span class="apidocCodeKeywordSpan">cgi</span>(&#x22;/path/to/wordpress&#x22;));
+
+	app.listen(9090);
+
+	console.log(&#x22;Server listening!&#x22;);
+
+Explanation
+-----------
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
